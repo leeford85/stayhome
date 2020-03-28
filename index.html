@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<head>
+
+  <meta charset="utf-8" />
+  <title>Profile Picture Overlay</title>
+
+	<style>
+		#overlay-img, .overlay-img {
+			width:500px;
+			height:auto;
+			display:block;
+			margin: 30px auto;
+		}
+
+		input {
+			display: block;
+			margin: 10px auto;
+		}
+
+		.inputfile {
+			width: 0.1px;
+			height: 0.1px;
+			opacity: 0;
+			overflow: hidden;
+			position: absolute;
+			z-index: -1;
+		}
+
+		.inputfile + label {
+			border-radius: 2px;
+			margin-top:40px;
+			display: inline-block;
+			padding: 10px 30px;
+		    font-weight: 700;
+		    text-transform: uppercase;
+		  	vertical-align: middle;
+		    color: white;
+		    background-color: #407FBF;
+		    -webkit-tap-highlight-color: transparent;
+		}
+
+		.inputfile:focus + label,
+		.inputfile + label:hover {
+		    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+		}
+
+		.inputfile + label {
+			cursor: pointer; /* "hand" cursor */
+		}
+
+		.inputfile:focus + label {
+			outline: 1px dotted #000;
+			outline: -webkit-focus-ring-color auto 5px;
+		}
+
+		.overlay-div {
+			text-align:center;
+		}
+
+		.madeBy {
+			text-align:center;
+			font-size: .7em;
+			margin: 50px auto 10px auto;
+		}
+
+	</style>
+
+
+</head>
+<body>
+
+
+  <script type="text/javascript" src="caman.full.js"></script>
+
+
+      <div>
+          <h2>Get your ThousandEyes #STAYINGHOME avatar overlay here!</h2>
+          
+          <ol>
+          	<li>If your picture is already in slack, go to your profile. (Or use a picture from your computer and jump to step 5)</li>
+          	<li><b>Right click</b> on your picture and copy the image URL.</li>
+			<li><b>Paste URL</b> into new broswer tab.</li>
+			 <li><b>Right Click</b> on the image and download to your computer.</li>
+			<li><b>Upload</b> the image by clicking the <b>Choose Profile Image</b> button below.</li>
+			<li><b>Download</b> your brand new picture (right-click and choose "Save As...").</li>
+			   <li><b>Upload</b> to slack.</li>
+          </ol>
+      </div>
+
+
+
+<div class="overlay-div">
+  	<input type="file" accept="image/*" onchange="loadFile(event)" id="file" class="inputfile" />
+	<label for="file">Choose Profile Image</label>
+
+	<img id="overlay-img" src="plain.png"/>
+</div>
+	<script>
+	  var loadFile = function(event) {
+	    var reader = new FileReader();
+	    reader.onload = function() {
+	      createOverlay(reader.result);
+	    };
+	    reader.readAsDataURL(event.target.files[0]);
+	  };
+
+	var createOverlay = function(uploadImage) {
+	  	var baseImg = uploadImage;
+	  	Caman("#overlay-img", function () {
+			this.brightness(5).render();
+			this.newLayer(function() {
+			    this.setBlendingMode("normal");
+			    this.opacity(100);
+			    this.overlayImage(baseImg);
+		  	});
+
+		  	this.newLayer(function() {
+			    this.setBlendingMode("normal");
+			    this.opacity(90);
+			    this.overlayImage('overlay.png');
+		  	});
+
+		  	$('#overlay-img').removeAttr('style');
+		});
+
+		$('#overlay-img').removeAttr('style');
+	};
+	</script>
+
+
+
+        
+        
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+</body>
+</html>
